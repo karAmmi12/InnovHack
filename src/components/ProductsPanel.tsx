@@ -1,16 +1,13 @@
-import { useState } from "react";
-import { CloudRain, MapPin, Sparkles, Package } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Sparkles, Package } from "lucide-react";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import ProductCard from "./ProductCard";
 import { Product } from "@/types/product";
 
 interface ProductsPanelProps {
   products: Product[];
-  onSimulateWeather: () => void;
 }
 
-const ProductsPanel = ({ products, onSimulateWeather }: ProductsPanelProps) => {
+const ProductsPanel = ({ products }: ProductsPanelProps) => {
   return (
     <div className="flex flex-col h-full bg-white">
       {/* Panel Header */}
@@ -26,18 +23,6 @@ const ProductsPanel = ({ products, onSimulateWeather }: ProductsPanelProps) => {
             </span>
           )}
         </div>
-        
-        {/* Weather Simulation Button */}
-        <Button
-          onClick={onSimulateWeather}
-          variant="outline"
-          size="sm"
-          className="w-full gap-2 border-blue-200 hover:bg-blue-50 hover:border-blue-400 text-gray-700 group text-xs h-8"
-        >
-          <CloudRain className="w-3.5 h-3.5 text-blue-500 group-hover:animate-bounce" />
-          <span>Simuler météo : Averses à Lyon</span>
-          <MapPin className="w-3 h-3 text-gray-400" />
-        </Button>
       </div>
 
       {/* Products List */}
@@ -54,7 +39,7 @@ const ProductsPanel = ({ products, onSimulateWeather }: ProductsPanelProps) => {
               </div>
               <h4 className="font-medium text-gray-800 mb-1 text-sm">Aucune recommandation</h4>
               <p className="text-xs text-gray-500 max-w-[200px]">
-                Posez une question à l'assistant ou simulez une météo pour voir des produits adaptés.
+                Posez une question à Verronik pour voir des produits adaptés à votre situation.
               </p>
             </div>
           )}

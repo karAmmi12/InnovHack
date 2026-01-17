@@ -42,7 +42,7 @@ const ChatModal = ({ isOpen, onClose, mode }: ChatModalProps) => {
               <div className="flex items-center gap-2 text-white">
                 <span className="text-xl">🤖</span>
                 <div>
-                  <h2 className="font-semibold">SportContext AI</h2>
+                  <h2 className="font-semibold">Verronik</h2>
                   <p className="text-xs text-white/80">Votre conseiller équipement</p>
                 </div>
               </div>
@@ -59,7 +59,6 @@ const ChatModal = ({ isOpen, onClose, mode }: ChatModalProps) => {
               <div className="lg:w-1/3 h-[40vh] lg:h-full border-t lg:border-t-0 lg:border-l border-border">
                 <ProductsPanel
                   products={products}
-                  onSimulateWeather={handleSimulateWeather}
                 />
               </div>
             </div>
@@ -83,7 +82,7 @@ const ChatModal = ({ isOpen, onClose, mode }: ChatModalProps) => {
           <div className="flex items-center gap-3 text-white">
             <span className="text-2xl">🤖</span>
             <div>
-              <h2 className="font-display font-semibold text-lg">SportContext AI</h2>
+              <h2 className="font-display font-semibold text-lg">Verronik</h2>
               <p className="text-sm text-white/80">Assistant équipement intelligent</p>
             </div>
           </div>
@@ -108,7 +107,6 @@ const ChatModal = ({ isOpen, onClose, mode }: ChatModalProps) => {
           <div className="lg:w-1/3 h-[50%] lg:h-full border-t lg:border-t-0">
             <ProductsPanel
               products={products}
-              onSimulateWeather={handleSimulateWeather}
             />
           </div>
         </div>

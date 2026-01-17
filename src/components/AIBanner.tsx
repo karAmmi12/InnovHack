@@ -18,7 +18,7 @@ const AIBanner = ({ onClick }: AIBannerProps) => {
           </span>
         </div>
         <button className="flex items-center gap-1 bg-white/20 hover:bg-white/30 rounded-full px-4 py-1.5 text-sm font-semibold transition-all backdrop-blur-sm">
-          Demandez à notre expert IA
+          Demandez à Verronik
           <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
         </button>
       </div>

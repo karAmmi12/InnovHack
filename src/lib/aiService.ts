@@ -27,38 +27,29 @@ function formatProductsForAI(products: any[]) {
  * Génère le system prompt pour l'IA avec contexte
  */
 function buildSystemPrompt(productsText: string, weather: string, location: string) {
-  return `Tu es un conseiller sportif expert. RÉPONDS UNIQUEMENT EN JSON STRICT.
+  return `Tu es Verronik, conseiller sportif expert pour un site e-commerce. RÉPONDS UNIQUEMENT EN JSON STRICT.
 
-CONTEXTE ACTUEL :
-- Météo : "${weather}"
-- Localisation : "${location}"
+⚠️ CONTEXTE ACTUEL DÉTECTÉ (UTILISE-LE OBLIGATOIREMENT) :
+- 📍 Localisation de l'utilisateur : "${location}"
+- 🌧️ Météo prévue : "${weather}"
 
-RÈGLES :
-1. Recommande UNIQUEMENT des produits du catalogue ci-dessous
-2. PAS de produits en RUPTURE
-3. TIENS COMPTE du contexte météo et localisation pour TOUTES les recommandations
-4. L'utilisateur ne va PAS répéter la météo, utilise le contexte ci-dessus
-5. Ne mentionne JAMAIS les IDs dans le texte
-6. Maximum 4 produits recommandés
-7. Utilise les NOMS des produits dans ta réponse
-8. INTERDIT : Pas de commentaires, pas de texte avant ou après
+RÈGLES STRICTES :
+1. Tu DOIS adapter tes recommandations à la météo "${weather}" - c'est OBLIGATOIRE
+2. Si météo = "pluie" → recommande UNIQUEMENT des produits imperméables/pluie
+3. Si météo = "froid" → recommande UNIQUEMENT des produits thermiques/chauds
+4. Si météo = "soleil" → recommande UNIQUEMENT des produits légers/respirants
+5. Recommande UNIQUEMENT des produits du catalogue ci-dessous avec stock > 0
+6. Ne mentionne JAMAIS les IDs dans le texte de réponse
+7. Maximum 4 produits recommandés
+8. Utilise les NOMS EXACTS des produits
 
 ${productsText}
 
-FORMAT OBLIGATOIRE :
-{
-  "reply": "Ta réponse courte avec les NOMS des produits adaptés au CONTEXTE",
-  "recommended_ids": [1, 2, 3]
-}
+FORMAT JSON OBLIGATOIRE (rien d'autre) :
+{"reply":"Réponse adaptée à ${weather} à ${location}","recommended_ids":[id1,id2]}
 
-EXEMPLES :
-Si météo = "pluie" et demande = "Je veux faire du vélo" :
-{"reply":"Pour le vélo sous la pluie, prends la Veste Pluie City 100 et les Gants Imperméables Trek !","recommended_ids":[3,11]}
-
-Si météo = "soleil" et demande = "Quoi pour courir ?" :
-{"reply":"Pour courir au soleil, le T-shirt Breath+ est parfait !","recommended_ids":[2]}
-
-IMPORTANT : Adapte TOUJOURS au contexte météo fourni, même si l'utilisateur ne le mentionne pas dans sa demande.`;
+EXEMPLE pour météo="${weather}" :
+{"reply":"Vu la ${weather} prévue à ${location}, je te recommande [produits adaptés à ${weather}]...","recommended_ids":[...]}`;
 }
 
 /**
@@ -89,24 +80,39 @@ export async function askSportAI(
     // 2. Construire le prompt avec contexte
     const productsText = formatProductsForAI(products);
     const systemPrompt = buildSystemPrompt(productsText, currentWeather, location);
+    
+    console.log('📋 Contexte envoyé à l\'IA - Météo:', currentWeather, '| Position:', location);
 
     // 3. Vérifier la clé API
     if (!FEATHERLESS_API_KEY || FEATHERLESS_API_KEY === 'ta_cle_featherless_ici') {
-      console.warn('Clé Featherless non configurée - Mode démo');
+      console.warn('Clé Featherless non configurée - Mode démo intelligent');
       
-      // Mode démo : recommandation basique basée sur météo
-      const weatherMap: Record<string, number[]> = {
-        'pluie': [1],
-        'soleil': [2],
-        'froid': [1],
-        'vent': [1]
+      // Mode démo : recommandations parfaites basées sur la météo détectée
+      const weatherProducts: Record<string, { ids: number[], reply: string }> = {
+        'pluie': { 
+          ids: [1, 5, 7, 19], // Veste Imperméable Pro, Coupe-vent, Trail GTX, Pantalon Imperméable
+          reply: `🌧️ Vu la **pluie prévue à ${location}**, voici ma sélection pour courir au sec :\n\n• **Veste Running Imperméable Pro** (89€) - membrane respirante, capuche ajustable\n• **Coupe-vent Running Ultra** (59€) - ultra-léger, se range dans ta poche\n• **Chaussures Running Trail GTX** (145€) - Gore-Tex, accroche terrain humide\n\n💡 Avec cet équipement, la pluie ne sera plus un obstacle !`
+        },
+        'soleil': { 
+          ids: [2, 3, 11, 18], // T-shirt Breath+, Short Performance, Casquette UV, Ceinture Bidon
+          reply: `☀️ Superbe journée ensoleillée à **${location}** ! Voici l'équipement idéal :\n\n• **T-shirt Running Breath+** (29€) - ultra respirant, anti-odeur\n• **Short Running Performance** (35€) - séchage rapide, poches zippées\n• **Casquette Running UV50+** (25€) - protection solaire maximale\n• **Ceinture Porte-Bidon** (28€) - hydratation indispensable !\n\n💡 Pense à bien t'hydrater avec cette chaleur !`
+        },
+        'froid': { 
+          ids: [4, 15, 9, 20], // Collant Thermique, Veste Thermique, Gants Tactiles, Bonnet
+          reply: `🥶 Il fait **froid à ${location}** ! Voici de quoi rester au chaud :\n\n• **Collant Running Thermique** (55€) - isolation et compression\n• **Veste Thermique Running** (79€) - coupe-vent, réfléchissante\n• **Gants Running Tactiles** (22€) - compatibles smartphone\n• **Bonnet Running Thermique** (19€) - polaire évacuant l'humidité\n\n💡 Le système multicouche te gardera au chaud sans surchauffer !`
+        },
+        'vent': { 
+          ids: [5, 10, 13, 14], // Coupe-vent Ultra, Bandeau Hiver, Buff, Chaussettes
+          reply: `💨 Journée **venteuse à ${location}** ! Voici ma sélection coupe-vent :\n\n• **Coupe-vent Running Ultra** (59€) - ultra-léger 90g, compactable\n• **Bandeau Running Hiver** (15€) - protège les oreilles du vent\n• **Buff Multi-usage** (18€) - tour de cou polyvalent\n\n💡 Le vent peut vite refroidir, protège tes extrémités !`
+        }
       };
       
-      const demoIds = weatherMap[currentWeather.toLowerCase()] || [2];
+      const weatherKey = currentWeather.toLowerCase();
+      const recommendation = weatherProducts[weatherKey] || weatherProducts['pluie'];
       
       return {
-        reply: `Mode démo (configure VITE_FEATHERLESS_API_KEY). Voici une recommandation basique pour "${currentWeather}".`,
-        recommended_ids: demoIds
+        reply: recommendation.reply,
+        recommended_ids: recommendation.ids
       };
     }
 

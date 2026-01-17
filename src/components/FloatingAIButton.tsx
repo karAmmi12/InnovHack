@@ -18,9 +18,9 @@ const FloatingAIButton = ({ onClick, isOpen }: FloatingAIButtonProps) => {
             <Sparkles className="w-5 h-5 text-white" />
           </div>
           <div>
-            <p className="font-semibold text-gray-900 text-sm">Expert IA disponible</p>
+            <p className="font-semibold text-gray-900 text-sm">Verronik disponible</p>
             <p className="text-xs text-gray-500 mt-1">
-              Besoin de conseils pour votre sortie VTT demain ? Je peux vous aider !
+              Besoin de conseils pour votre running demain ? Je peux vous aider !
             </p>
           </div>
         </div>

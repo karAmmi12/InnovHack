@@ -11,9 +11,10 @@ interface ChatInterfaceProps {
   simulatedWeather: { condition: string; location: string } | null;
   initialMessage?: string;
   proactiveMessage?: string;
+  contextInfo?: { weather: string; location: string };
 }
 
-const ChatInterface = ({ onProductsRecommended, simulatedWeather, initialMessage, proactiveMessage }: ChatInterfaceProps) => {
+const ChatInterface = ({ onProductsRecommended, simulatedWeather, initialMessage, proactiveMessage, contextInfo }: ChatInterfaceProps) => {
   const [messages, setMessages] = useState<ChatMessageType[]>([]);
   const [hasInitialized, setHasInitialized] = useState(false);
   const [input, setInput] = useState("");
@@ -21,9 +22,9 @@ const ChatInterface = ({ onProductsRecommended, simulatedWeather, initialMessage
   const [hasProcessedInitialMessage, setHasProcessedInitialMessage] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   
-  // Contexte météo et position persistants
-  const [weatherContext, setWeatherContext] = useState<string>("temps normal");
-  const [locationContext, setLocationContext] = useState<string>("votre région");
+  // Contexte météo et position persistants (initialisés depuis la bannière si disponible)
+  const [weatherContext, setWeatherContext] = useState<string>(contextInfo?.weather || "temps normal");
+  const [locationContext, setLocationContext] = useState<string>(contextInfo?.location || "votre région");
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -52,7 +53,7 @@ const ChatInterface = ({ onProductsRecommended, simulatedWeather, initialMessage
         setMessages([{
           id: '1',
           role: 'assistant',
-          content: `Bonjour ! 👋 Je suis votre assistant SportContext AI.\n\n**Contexte actuel :**\n📍 Position : **${locationContext}**\n🌤️ Météo : **${weatherContext}**\n\n💡 *Astuce : Mentionnez votre ville ("Je suis à Paris") ou la météo ("Il pleut") pour que je personnalise mes recommandations !*`,
+          content: `Bonjour ! 👋 Je suis Verronik, votre assistant équipement.\n\n**Contexte actuel :**\n📍 Position : **${locationContext}**\n🌤️ Météo : **${weatherContext}**\n\n💡 *Astuce : Mentionnez votre ville ("Je suis à Paris") ou la météo ("Il pleut") pour que je personnalise mes recommandations !*`,
           timestamp: new Date(),
         }]);
       }
@@ -77,6 +78,15 @@ const ChatInterface = ({ onProductsRecommended, simulatedWeather, initialMessage
       setLocationContext(simulatedWeather.location);
     }
   }, [simulatedWeather]);
+
+  // Sync context from banner (contextInfo prop)
+  useEffect(() => {
+    if (contextInfo) {
+      setWeatherContext(contextInfo.weather);
+      setLocationContext(contextInfo.location);
+      console.log('🌤️ Contexte bannière synchronisé - Météo:', contextInfo.weather, '| Position:', contextInfo.location);
+    }
+  }, [contextInfo]);
 
   const processMessage = async (messageText: string) => {
     const userMessage: ChatMessageType = {
@@ -184,27 +194,6 @@ const ChatInterface = ({ onProductsRecommended, simulatedWeather, initialMessage
 
   return (
     <div className="flex flex-col h-full bg-background">
-      {/* Chat Header */}
-      <div className="flex-shrink-0 px-6 py-4 border-b border-border bg-card">
-        <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-full bg-gradient-primary flex items-center justify-center shadow-glow animate-pulse-glow">
-            <span className="text-lg">🤖</span>
-          </div>
-          <div className="flex-1">
-            <h2 className="font-display font-semibold text-foreground">SportContext AI</h2>
-            <p className="text-xs text-muted-foreground">Assistant équipement sportif</p>
-          </div>
-          <div className="flex gap-2 text-xs">
-            <div className="px-3 py-1.5 rounded-full bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300 font-medium border border-blue-200 dark:border-blue-800 transition-all">
-              📍 {locationContext}
-            </div>
-            <div className="px-3 py-1.5 rounded-full bg-orange-50 dark:bg-orange-900/20 text-orange-700 dark:text-orange-300 font-medium border border-orange-200 dark:border-orange-800 transition-all">
-              {weatherContext === 'pluie' ? '🌧️' : weatherContext === 'soleil' ? '☀️' : weatherContext === 'froid' ? '❄️' : weatherContext === 'vent' ? '💨' : '🌤️'} {weatherContext}
-            </div>
-          </div>
-        </div>
-      </div>
-
       {/* Messages Area */}
       <div className="flex-1 overflow-y-auto p-6 space-y-4">
         {messages.map((message) => (

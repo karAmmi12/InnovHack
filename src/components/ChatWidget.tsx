@@ -30,7 +30,7 @@ const ChatWidget = ({ isOpen, onClick }: ChatWidgetProps) => {
         <div className="absolute bottom-20 right-0 bg-gray-900 text-white text-sm px-4 py-2 rounded-lg shadow-lg whitespace-nowrap animate-fade-in">
           <div className="flex items-center gap-2">
             <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
-            Expert IA disponible
+            Verronik disponible
           </div>
           <div className="absolute bottom-0 right-6 transform translate-y-1/2 rotate-45 w-3 h-3 bg-gray-900" />
         </div>
