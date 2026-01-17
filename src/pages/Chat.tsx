@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import ChatInterface from "@/components/ChatInterface";
 import ProductsPanel from "@/components/ProductsPanel";
 import { Product } from "@/types/product";
-import { supabase } from "@/integrations/supabase/client";
+import productsData from "@/data/products.json";
 
 const Chat = () => {
   const location = useLocation();
@@ -16,14 +16,9 @@ const Chat = () => {
   // Charger quelques produits au démarrage
   useEffect(() => {
     const loadInitialProducts = async () => {
-      const { data, error } = await supabase
-        .from('products')
-        .select('*')
-        .limit(5);
-      
-      if (data && !error) {
-        setRecommendedProducts(data as Product[]);
-      }
+      // Charger les 5 premiers produits depuis products.json
+      const initialProducts = productsData.slice(0, 5);
+      setRecommendedProducts(initialProducts as Product[]);
     };
     loadInitialProducts();
   }, []);
@@ -31,16 +26,12 @@ const Chat = () => {
   const handleSimulateWeather = async () => {
     setSimulatedWeather({ condition: 'Orage', location: 'Chamonix' });
     
-    // Charger les produits avec weather_tag "Pluie" et category "Randonnée"
-    const { data, error } = await supabase
-      .from('products')
-      .select('*')
-      .contains('weather_tags', ['Pluie'])
-      .eq('category', 'Randonnée');
+    // Charger les produits avec weather_tags "pluie" et category "Randonnée" depuis products.json
+    const filteredProducts = productsData.filter(p => 
+      p.weather_tags.includes('pluie') && p.category === 'Randonnée'
+    );
     
-    if (data && !error) {
-      setRecommendedProducts(data as Product[]);
-    }
+    setRecommendedProducts(filteredProducts as Product[]);
     
     setTimeout(() => setSimulatedWeather(null), 100);
   };

@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import ChatMessage from "./ChatMessage";
 import { ChatMessage as ChatMessageType, Product } from "@/types/product";
+import productsData from "@/data/products.json";
 
 interface ChatInterfaceProps {
   onProductsRecommended: (products: Product[]) => void;
@@ -19,6 +20,10 @@ const ChatInterface = ({ onProductsRecommended, simulatedWeather, initialMessage
   const [isLoading, setIsLoading] = useState(false);
   const [hasProcessedInitialMessage, setHasProcessedInitialMessage] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  
+  // Contexte météo et position persistants
+  const [weatherContext, setWeatherContext] = useState<string>("temps normal");
+  const [locationContext, setLocationContext] = useState<string>("votre région");
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -34,7 +39,6 @@ const ChatInterface = ({ onProductsRecommended, simulatedWeather, initialMessage
       setHasInitialized(true);
       
       if (proactiveMessage) {
-        // Small delay to make it feel natural
         setTimeout(() => {
           const aiMessage: ChatMessageType = {
             id: '1',
@@ -43,16 +47,12 @@ const ChatInterface = ({ onProductsRecommended, simulatedWeather, initialMessage
             timestamp: new Date(),
           };
           setMessages([aiMessage]);
-          
-          // Auto-fetch rain products for VTT context
-          fetchProductsForWeather('Pluie', 'Vélo');
-        }, 800);
+        }, 300);
       } else {
-        // Default greeting
         setMessages([{
           id: '1',
           role: 'assistant',
-          content: "Bonjour ! 👋 Je suis votre assistant SportContext AI. Dites-moi quelle activité sportive vous prévoyez et les conditions météo, et je vous recommanderai l'équipement idéal !",
+          content: `Bonjour ! 👋 Je suis votre assistant SportContext AI.\n\n**Contexte actuel :**\n📍 Position : **${locationContext}**\n🌤️ Météo : **${weatherContext}**\n\n💡 *Astuce : Mentionnez votre ville ("Je suis à Paris") ou la météo ("Il pleut") pour que je personnalise mes recommandations !*`,
           timestamp: new Date(),
         }]);
       }
@@ -64,7 +64,6 @@ const ChatInterface = ({ onProductsRecommended, simulatedWeather, initialMessage
     if (initialMessage && !hasProcessedInitialMessage && hasInitialized) {
       setHasProcessedInitialMessage(true);
       setInput(initialMessage);
-      // Auto-send after a short delay
       setTimeout(() => {
         processMessage(initialMessage);
       }, 500);
@@ -74,56 +73,10 @@ const ChatInterface = ({ onProductsRecommended, simulatedWeather, initialMessage
   // Handle simulated weather trigger
   useEffect(() => {
     if (simulatedWeather) {
-      handleSimulatedWeather(simulatedWeather);
+      setWeatherContext(simulatedWeather.condition);
+      setLocationContext(simulatedWeather.location);
     }
   }, [simulatedWeather]);
-
-  const handleSimulatedWeather = async (weather: { condition: string; location: string }) => {
-    const userMessage: ChatMessageType = {
-      id: Date.now().toString(),
-      role: 'user',
-      content: `🌧️ [Simulation Météo] Orage prévu à ${weather.location}. Quels équipements me recommandez-vous pour une randonnée ?`,
-      timestamp: new Date(),
-    };
-    
-    setMessages(prev => [...prev, userMessage]);
-    setIsLoading(true);
-
-    // Simulate API call delay
-    await new Promise(resolve => setTimeout(resolve, 1500));
-
-    const assistantMessage: ChatMessageType = {
-      id: (Date.now() + 1).toString(),
-      role: 'assistant',
-      content: `⚡ Alerte météo : Orage prévu à ${weather.location} !\n\nPour votre randonnée sous ces conditions difficiles, je vous recommande particulièrement :\n\n• **Protection imperméable** - Veste Gore-Tex indispensable\n• **Chaussures étanches** - Semelles adhérentes pour terrain humide\n• **Pantalon technique** - Avec coutures étanches\n\nJ'ai sélectionné les meilleurs produits adaptés à la pluie et à la randonnée. Consultez le panneau de droite ! 👉`,
-      timestamp: new Date(),
-    };
-
-    setMessages(prev => [...prev, assistantMessage]);
-    setIsLoading(false);
-
-    // Trigger product recommendation fetch
-    fetchProductsForWeather('Pluie', 'Randonnée');
-  };
-
-  const fetchProductsForWeather = async (weatherTag: string, category: string) => {
-    try {
-      const { supabase } = await import("@/integrations/supabase/client");
-      const { data, error } = await supabase
-        .from('products')
-        .select('*')
-        .contains('weather_tags', [weatherTag])
-        .eq('category', category)
-        .order('stock_level', { ascending: false });
-
-      if (error) throw error;
-      if (data) {
-        onProductsRecommended(data as Product[]);
-      }
-    } catch (error) {
-      console.error('Error fetching products:', error);
-    }
-  };
 
   const processMessage = async (messageText: string) => {
     const userMessage: ChatMessageType = {
@@ -137,57 +90,83 @@ const ChatInterface = ({ onProductsRecommended, simulatedWeather, initialMessage
     setInput("");
     setIsLoading(true);
 
-    // Simulate AI processing
-    await new Promise(resolve => setTimeout(resolve, 1200));
+    try {
+      // Détection automatique du contexte météo et position
+      const lowerInput = messageText.toLowerCase();
+      
+      // Détection de la météo dans le message actuel
+      let currentWeather = weatherContext; // Utiliser le contexte existant par défaut
+      if (lowerInput.includes('pluie') || lowerInput.includes('orage') || lowerInput.includes('humide')) {
+        currentWeather = 'pluie';
+        setWeatherContext('pluie');
+      } else if (lowerInput.includes('froid') || lowerInput.includes('neige') || lowerInput.includes('hiver')) {
+        currentWeather = 'froid';
+        setWeatherContext('froid');
+      } else if (lowerInput.includes('soleil') || lowerInput.includes('chaud') || lowerInput.includes('été')) {
+        currentWeather = 'soleil';
+        setWeatherContext('soleil');
+      } else if (lowerInput.includes('vent') || lowerInput.includes('tempête')) {
+        currentWeather = 'vent';
+        setWeatherContext('vent');
+      }
+      
+      // Détection de la localisation dans le message actuel
+      let currentLocation = locationContext; // Utiliser le contexte existant par défaut
+      const locationMatch = lowerInput.match(/à\s+([a-zàâäéèêëïîôùûüÿç\s-]+)/i);
+      if (locationMatch) {
+        currentLocation = locationMatch[1].trim();
+        setLocationContext(currentLocation);
+      }
 
-    // Detect keywords and recommend products
-    const lowerInput = messageText.toLowerCase();
-    let weatherTag = '';
-    let category = '';
-    let responseText = '';
+      console.log('🌤️ Contexte utilisé - Météo:', currentWeather, '| Position:', currentLocation);
 
-    if (lowerInput.includes('pluie') || lowerInput.includes('orage') || lowerInput.includes('humide')) {
-      weatherTag = 'Pluie';
-      responseText = '🌧️ Je détecte des conditions pluvieuses ! ';
-    } else if (lowerInput.includes('froid') || lowerInput.includes('neige') || lowerInput.includes('hiver')) {
-      weatherTag = 'Froid';
-      responseText = '❄️ Conditions froides détectées ! ';
-    } else if (lowerInput.includes('soleil') || lowerInput.includes('chaud') || lowerInput.includes('été')) {
-      weatherTag = 'Soleil';
-      responseText = '☀️ Temps ensoleillé ! ';
-    } else if (lowerInput.includes('vent') || lowerInput.includes('tempête')) {
-      weatherTag = 'Vent';
-      responseText = '💨 Conditions venteuses ! ';
+      // Ajouter un message système pour informer l'utilisateur du contexte détecté
+      if (currentWeather !== weatherContext || currentLocation !== locationContext) {
+        const contextUpdateMsg: ChatMessageType = {
+          id: `context-${Date.now()}`,
+          role: 'assistant',
+          content: `✅ Contexte mis à jour : ${currentWeather !== weatherContext ? `🌤️ Météo: **${currentWeather}**` : ''} ${currentLocation !== locationContext ? `📍 Position: **${currentLocation}**` : ''}`,
+          timestamp: new Date(),
+        };
+        setMessages(prev => [...prev, contextUpdateMsg]);
+      }
+
+      // Appel à l'IA avec le contexte détecté immédiatement
+      const { askSportAI, getProductsByIds } = await import("@/lib/aiService");
+      const aiResponse = await askSportAI(
+        messageText, 
+        currentWeather,
+        currentLocation
+      );
+      
+      const aiMessage: ChatMessageType = {
+        id: (Date.now() + 1).toString(),
+        role: 'assistant',
+        content: aiResponse?.reply || "Désolé, je n'ai pas pu traiter votre demande.",
+        timestamp: new Date(),
+      };
+      setMessages(prev => [...prev, aiMessage]);
+      
+      if (aiResponse && aiResponse.recommended_ids) {
+        const products = await getProductsByIds(aiResponse.recommended_ids);
+        if (products && products.length > 0) {
+          onProductsRecommended(products as Product[]);
+        }
+      }
+
+    } catch (error) {
+      console.error('Error processing message:', error);
+      
+      const errorMessage: ChatMessageType = {
+        id: (Date.now() + 1).toString(),
+        role: 'assistant',
+        content: "Désolé, une erreur est survenue. Vérifiez la console pour plus de détails.",
+        timestamp: new Date(),
+      };
+      
+      setMessages(prev => [...prev, errorMessage]);
     }
 
-    if (lowerInput.includes('randonnée') || lowerInput.includes('marche') || lowerInput.includes('trek')) {
-      category = 'Randonnée';
-      responseText += 'Pour votre randonnée, ';
-    } else if (lowerInput.includes('vélo') || lowerInput.includes('cyclisme')) {
-      category = 'Vélo';
-      responseText += 'Pour votre sortie vélo, ';
-    } else if (lowerInput.includes('running') || lowerInput.includes('course') || lowerInput.includes('jogging')) {
-      category = 'Running';
-      responseText += 'Pour votre course, ';
-    }
-
-    if (weatherTag && category) {
-      responseText += `j'ai trouvé des équipements parfaitement adaptés. Consultez mes recommandations dans le panneau latéral ! 👉`;
-      fetchProductsForWeather(weatherTag, category);
-    } else if (weatherTag || category) {
-      responseText += `pouvez-vous me préciser ${!category ? "l'activité sportive" : "les conditions météo"} pour des recommandations plus précises ?`;
-    } else {
-      responseText = "Je comprends votre demande ! Pour vous recommander l'équipement idéal, dites-moi :\n\n• **L'activité** : Randonnée, Vélo, Running...\n• **La météo** : Pluie, Soleil, Froid, Vent...\n\nPar exemple : \"Je prévois une randonnée sous la pluie\"";
-    }
-
-    const assistantMessage: ChatMessageType = {
-      id: (Date.now() + 1).toString(),
-      role: 'assistant',
-      content: responseText,
-      timestamp: new Date(),
-    };
-
-    setMessages(prev => [...prev, assistantMessage]);
     setIsLoading(false);
   };
 
@@ -211,9 +190,17 @@ const ChatInterface = ({ onProductsRecommended, simulatedWeather, initialMessage
           <div className="w-10 h-10 rounded-full bg-gradient-primary flex items-center justify-center shadow-glow animate-pulse-glow">
             <span className="text-lg">🤖</span>
           </div>
-          <div>
+          <div className="flex-1">
             <h2 className="font-display font-semibold text-foreground">SportContext AI</h2>
             <p className="text-xs text-muted-foreground">Assistant équipement sportif</p>
+          </div>
+          <div className="flex gap-2 text-xs">
+            <div className="px-3 py-1.5 rounded-full bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300 font-medium border border-blue-200 dark:border-blue-800 transition-all">
+              📍 {locationContext}
+            </div>
+            <div className="px-3 py-1.5 rounded-full bg-orange-50 dark:bg-orange-900/20 text-orange-700 dark:text-orange-300 font-medium border border-orange-200 dark:border-orange-800 transition-all">
+              {weatherContext === 'pluie' ? '🌧️' : weatherContext === 'soleil' ? '☀️' : weatherContext === 'froid' ? '❄️' : weatherContext === 'vent' ? '💨' : '🌤️'} {weatherContext}
+            </div>
           </div>
         </div>
       </div>
@@ -248,7 +235,7 @@ const ChatInterface = ({ onProductsRecommended, simulatedWeather, initialMessage
             value={input}
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={handleKeyDown}
-            placeholder="Décrivez votre activité et les conditions météo..."
+            placeholder={`Ex: "Je veux faire du vélo" (Contexte: ${weatherContext} à ${locationContext})`}
             className="min-h-[48px] max-h-[120px] resize-none bg-background border-border focus:border-primary"
             disabled={isLoading}
           />

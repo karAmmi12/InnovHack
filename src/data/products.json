@@ -1,0 +1,452 @@
+[
+  {
+    "id": 1,
+    "name": "Veste Gore-Tex MT500",
+    "category": "Randonnée",
+    "price": 120,
+    "weather_tags": ["pluie", "froid"],
+    "stock_level": 15,
+    "image_url": "https://placehold.co/400x400?text=Veste+Pluie",
+    "description": "Imperméable et coupe-vent pour randonnées pluvieuses."
+  },
+  {
+    "id": 27,
+    "name": "Pantalon Imperméable Trek 900",
+    "category": "Randonnée",
+    "price": 85,
+    "weather_tags": ["pluie", "froid", "vent"],
+    "stock_level": 18,
+    "image_url": "https://placehold.co/400x400?text=Pantalon+Pluie",
+    "description": "Protection totale contre la pluie et le vent."
+  },
+  {
+    "id": 28,
+    "name": "Veste Softshell Montagne",
+    "category": "Randonnée",
+    "price": 95,
+    "weather_tags": ["froid", "vent"],
+    "stock_level": 22,
+    "image_url": "https://placehold.co/400x400?text=Softshell",
+    "description": "Coupe-vent et respirante pour temps froid."
+  },
+  {
+    "id": 29,
+    "name": "Gants Thermiques Hiver",
+    "category": "Randonnée",
+    "price": 28,
+    "weather_tags": ["froid"],
+    "stock_level": 35,
+    "image_url": "https://placehold.co/400x400?text=Gants+Hiver",
+    "description": "Isolation thermique maximale pour l'hiver."
+  },
+  {
+    "id": 30,
+    "name": "Bonnet Polaire Alpine",
+    "category": "Randonnée",
+    "price": 18,
+    "weather_tags": ["froid"],
+    "stock_level": 50,
+    "image_url": "https://placehold.co/400x400?text=Bonnet",
+    "description": "Chaud et confortable pour températures négatives."
+  },
+  {
+    "id": 2,
+    "name": "T-shirt Breath+",
+    "category": "Running",
+    "price": 25,
+    "weather_tags": ["soleil", "chaud"],
+    "stock_level": 40,
+    "image_url": "https://placehold.co/400x400?text=Tshirt+Soleil",
+    "description": "Ultra respirant."
+  },
+  {
+    "id": 3,
+    "name": "Veste Pluie City 100",
+    "category": "Vélo",
+    "price": 45,
+    "weather_tags": ["pluie"],
+    "stock_level": 0,
+    "image_url": "https://placehold.co/400x400?text=Veste+Velo",
+    "description": "Idéal ville. Attention : Rupture de stock."
+  },
+  {
+    "id": 4,
+    "name": "Short de Trail",
+    "category": "Randonnée",
+    "price": 35,
+    "weather_tags": ["soleil", "chaud"],
+    "stock_level": 20,
+    "image_url": "https://placehold.co/400x400?text=Short+Trail",
+    "description": "Léger et robuste."
+  },
+  {
+    "id": 5,
+    "name": "Chaussures Trail Pro",
+    "category": "Randonnée",
+    "price": 95,
+    "weather_tags": ["pluie", "froid"],
+    "stock_level": 12,
+    "image_url": "https://placehold.co/400x400?text=Chaussures+Trail",
+    "description": "Semelle accroche, imperméable."
+  },
+  {
+    "id": 6,
+    "name": "Baskets Running Speed",
+    "category": "Running",
+    "price": 80,
+    "weather_tags": ["soleil", "chaud"],
+    "stock_level": 25,
+    "image_url": "https://placehold.co/400x400?text=Baskets+Running",
+    "description": "Légères et dynamiques."
+  },
+  {
+    "id": 7,
+    "name": "Chaussures Montagne Alpine",
+    "category": "Randonnée",
+    "price": 150,
+    "weather_tags": ["froid", "neige"],
+    "stock_level": 8,
+    "image_url": "https://placehold.co/400x400?text=Chaussures+Montagne",
+    "description": "Isolation thermique, cramponnable."
+  },
+  {
+    "id": 8,
+    "name": "Running Road Light",
+    "category": "Running",
+    "price": 60,
+    "weather_tags": ["soleil"],
+    "stock_level": 30,
+    "image_url": "https://placehold.co/400x400?text=Running+Route",
+    "description": "Amorti optimal pour route."
+  },
+  {
+    "id": 9,
+    "name": "Gants Polaire Mountain",
+    "category": "Randonnée",
+    "price": 22,
+    "weather_tags": ["froid"],
+    "stock_level": 35,
+    "image_url": "https://placehold.co/400x400?text=Gants+Polaire",
+    "description": "Chauds et respirants."
+  },
+  {
+    "id": 10,
+    "name": "Gants Running Tactiles",
+    "category": "Running",
+    "price": 18,
+    "weather_tags": ["froid"],
+    "stock_level": 40,
+    "image_url": "https://placehold.co/400x400?text=Gants+Running",
+    "description": "Compatible smartphone, légers."
+  },
+  {
+    "id": 11,
+    "name": "Gants Imperméables Trek",
+    "category": "Randonnée",
+    "price": 35,
+    "weather_tags": ["pluie", "froid"],
+    "stock_level": 15,
+    "image_url": "https://placehold.co/400x400?text=Gants+Imperméables",
+    "description": "Protection maximale contre la pluie."
+  },
+  {
+    "id": 12,
+    "name": "Bonnet Thermique Pro",
+    "category": "Randonnée",
+    "price": 15,
+    "weather_tags": ["froid"],
+    "stock_level": 50,
+    "image_url": "https://placehold.co/400x400?text=Bonnet+Thermique",
+    "description": "Couvre-oreilles intégré."
+  },
+  {
+    "id": 13,
+    "name": "Casquette Running UV50+",
+    "category": "Running",
+    "price": 20,
+    "weather_tags": ["soleil", "chaud"],
+    "stock_level": 45,
+    "image_url": "https://placehold.co/400x400?text=Casquette+UV",
+    "description": "Protection solaire maximale."
+  },
+  {
+    "id": 14,
+    "name": "Bandeau Running Hiver",
+    "category": "Running",
+    "price": 12,
+    "weather_tags": ["froid"],
+    "stock_level": 30,
+    "image_url": "https://placehold.co/400x400?text=Bandeau+Running",
+    "description": "Protège les oreilles, ultra-léger."
+  },
+  {
+    "id": 15,
+    "name": "Pantalon Randonnée Imperméable",
+    "category": "Randonnée",
+    "price": 70,
+    "weather_tags": ["pluie", "froid"],
+    "stock_level": 18,
+    "image_url": "https://placehold.co/400x400?text=Pantalon+Rando",
+    "description": "Respirant avec zip ventilation."
+  },
+  {
+    "id": 16,
+    "name": "Collant Running Thermique",
+    "category": "Running",
+    "price": 45,
+    "weather_tags": ["froid"],
+    "stock_level": 28,
+    "image_url": "https://placehold.co/400x400?text=Collant+Running",
+    "description": "Compression légère, chaud."
+  },
+  {
+    "id": 17,
+    "name": "Short Running Performance",
+    "category": "Running",
+    "price": 30,
+    "weather_tags": ["soleil", "chaud"],
+    "stock_level": 35,
+    "image_url": "https://placehold.co/400x400?text=Short+Running",
+    "description": "Séchage rapide, poches intégrées."
+  },
+  {
+    "id": 18,
+    "name": "Pantalon Convertible Trail",
+    "category": "Randonnée",
+    "price": 55,
+    "weather_tags": ["soleil", "chaud"],
+    "stock_level": 20,
+    "image_url": "https://placehold.co/400x400?text=Pantalon+Convertible",
+    "description": "Se transforme en short, anti-UV."
+  },
+  {
+    "id": 19,
+    "name": "Polaire Micro Mountain",
+    "category": "Randonnée",
+    "price": 40,
+    "weather_tags": ["froid"],
+    "stock_level": 25,
+    "image_url": "https://placehold.co/400x400?text=Polaire+Mountain",
+    "description": "Légère, respirante, chaude."
+  },
+  {
+    "id": 20,
+    "name": "Coupe-vent Running Ultra",
+    "category": "Running",
+    "price": 50,
+    "weather_tags": ["vent", "pluie"],
+    "stock_level": 22,
+    "image_url": "https://placehold.co/400x400?text=Coupe+Vent",
+    "description": "Compacte, se range dans sa poche."
+  },
+  {
+    "id": 21,
+    "name": "Doudoune Trail Compacte",
+    "category": "Randonnée",
+    "price": 90,
+    "weather_tags": ["froid"],
+    "stock_level": 10,
+    "image_url": "https://placehold.co/400x400?text=Doudoune+Trail",
+    "description": "Isolation synthétique, ultra-légère."
+  },
+  {
+    "id": 22,
+    "name": "Veste Softshell Alpine",
+    "category": "Randonnée",
+    "price": 85,
+    "weather_tags": ["vent", "froid"],
+    "stock_level": 14,
+    "image_url": "https://placehold.co/400x400?text=Softshell",
+    "description": "Respirante et extensible."
+  },
+  {
+    "id": 23,
+    "name": "Buff Multi-usage",
+    "category": "Running",
+    "price": 15,
+    "weather_tags": ["froid", "vent", "soleil"],
+    "stock_level": 60,
+    "image_url": "https://placehold.co/400x400?text=Buff",
+    "description": "Tour de cou polyvalent."
+  },
+  {
+    "id": 24,
+    "name": "Chaussettes Trail Anti-ampoules",
+    "category": "Randonnée",
+    "price": 18,
+    "weather_tags": ["pluie", "froid", "soleil", "chaud"],
+    "stock_level": 50,
+    "image_url": "https://placehold.co/400x400?text=Chaussettes+Trail",
+    "description": "Renforts zones de frottement."
+  },
+  {
+    "id": 25,
+    "name": "Lunettes Running Photochromiques",
+    "category": "Running",
+    "price": 65,
+    "weather_tags": ["soleil"],
+    "stock_level": 15,
+    "image_url": "https://placehold.co/400x400?text=Lunettes+Running",
+    "description": "Verres adaptatifs, anti-buée."
+  },
+  {
+    "id": 26,
+    "name": "Sac Hydratation Trail 10L",
+    "category": "Randonnée",
+    "price": 75,
+    "weather_tags": ["soleil", "chaud"],
+    "stock_level": 12,
+    "image_url": "https://placehold.co/400x400?text=Sac+Hydratation",
+    "description": "Poche à eau 2L incluse."
+  },
+  {
+    "id": 31,
+    "name": "Cuissard Vélo Pro Gel",
+    "category": "Vélo",
+    "price": 55,
+    "weather_tags": ["soleil", "chaud"],
+    "stock_level": 25,
+    "image_url": "https://placehold.co/400x400?text=Cuissard+Velo",
+    "description": "Peau de chamois gel, respirant."
+  },
+  {
+    "id": 32,
+    "name": "Maillot Vélo Aéro",
+    "category": "Vélo",
+    "price": 48,
+    "weather_tags": ["soleil", "chaud"],
+    "stock_level": 30,
+    "image_url": "https://placehold.co/400x400?text=Maillot+Velo",
+    "description": "Coupe ajustée, 3 poches dorsales."
+  },
+  {
+    "id": 33,
+    "name": "Veste Vélo Imperméable Fluo",
+    "category": "Vélo",
+    "price": 68,
+    "weather_tags": ["pluie", "vent"],
+    "stock_level": 18,
+    "image_url": "https://placehold.co/400x400?text=Veste+Velo+Pluie",
+    "description": "Haute visibilité, totalement étanche."
+  },
+  {
+    "id": 34,
+    "name": "Gants Vélo Hiver Thermiques",
+    "category": "Vélo",
+    "price": 32,
+    "weather_tags": ["froid"],
+    "stock_level": 22,
+    "image_url": "https://placehold.co/400x400?text=Gants+Velo+Hiver",
+    "description": "Isolation Thinsulate, grip renforcé."
+  },
+  {
+    "id": 35,
+    "name": "Sur-chaussures Vélo Imperméables",
+    "category": "Vélo",
+    "price": 28,
+    "weather_tags": ["pluie", "froid"],
+    "stock_level": 20,
+    "image_url": "https://placehold.co/400x400?text=Surchaussures",
+    "description": "Néoprène 3mm, fermeture velcro."
+  },
+  {
+    "id": 36,
+    "name": "Lunettes Vélo Sport Polycarbonate",
+    "category": "Vélo",
+    "price": 42,
+    "weather_tags": ["soleil"],
+    "stock_level": 28,
+    "image_url": "https://placehold.co/400x400?text=Lunettes+Velo",
+    "description": "Protection UV400, anti-rayures."
+  },
+  {
+    "id": 37,
+    "name": "Coupe-vent Vélo Compactable",
+    "category": "Vélo",
+    "price": 38,
+    "weather_tags": ["vent"],
+    "stock_level": 24,
+    "image_url": "https://placehold.co/400x400?text=Coupe+Vent",
+    "description": "Se range dans sa poche, ultra-léger."
+  },
+  {
+    "id": 38,
+    "name": "Collant Vélo Thermique Long",
+    "category": "Vélo",
+    "price": 58,
+    "weather_tags": ["froid"],
+    "stock_level": 16,
+    "image_url": "https://placehold.co/400x400?text=Collant+Velo",
+    "description": "Polaire intérieur, bretelles confort."
+  },
+  {
+    "id": 39,
+    "name": "Short Running Léger Mesh",
+    "category": "Running",
+    "price": 28,
+    "weather_tags": ["soleil", "chaud"],
+    "stock_level": 35,
+    "image_url": "https://placehold.co/400x400?text=Short+Running",
+    "description": "Séchage rapide, poche sécurisée."
+  },
+  {
+    "id": 40,
+    "name": "Veste Running Imperméable",
+    "category": "Running",
+    "price": 72,
+    "weather_tags": ["pluie", "vent"],
+    "stock_level": 14,
+    "image_url": "https://placehold.co/400x400?text=Veste+Running+Pluie",
+    "description": "Membrane respirante 10000mm."
+  },
+  {
+    "id": 41,
+    "name": "Pantalon Randonnée Convertible",
+    "category": "Randonnée",
+    "price": 62,
+    "weather_tags": ["soleil", "chaud"],
+    "stock_level": 19,
+    "image_url": "https://placehold.co/400x400?text=Pantalon+Convertible",
+    "description": "Se transforme en short, anti-UV."
+  },
+  {
+    "id": 42,
+    "name": "Polaire Randonnée Microfibre",
+    "category": "Randonnée",
+    "price": 45,
+    "weather_tags": ["froid"],
+    "stock_level": 26,
+    "image_url": "https://placehold.co/400x400?text=Polaire+Rando",
+    "description": "Isolation thermique, poches zippées."
+  },
+  {
+    "id": 43,
+    "name": "Cape Pluie Vélo Haute Visibilité",
+    "category": "Vélo",
+    "price": 35,
+    "weather_tags": ["pluie"],
+    "stock_level": 15,
+    "image_url": "https://placehold.co/400x400?text=Cape+Velo",
+    "description": "Couvre le guidon, bandes réfléchissantes."
+  },
+  {
+    "id": 44,
+    "name": "Débardeur Running Respirant",
+    "category": "Running",
+    "price": 22,
+    "weather_tags": ["soleil", "chaud"],
+    "stock_level": 40,
+    "image_url": "https://placehold.co/400x400?text=Debardeur",
+    "description": "Maille technique anti-odeur."
+  },
+  {
+    "id": 45,
+    "name": "Guêtres Randonnée Imperméables",
+    "category": "Randonnée",
+    "price": 32,
+    "weather_tags": ["pluie", "neige"],
+    "stock_level": 18,
+    "image_url": "https://placehold.co/400x400?text=Guetres",
+    "description": "Protection contre neige et boue."
+  }
+]
