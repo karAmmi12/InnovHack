@@ -1,10 +1,10 @@
-# 🏆 SportContext AI - Assistant Sportif Intelligent
+# 🏆 Verronik - Assistant Sportif Intelligent
 
 > Projet généré avec **Lovable** + Backend IA intégré avec **Featherless AI**
 
 ## 🎯 Qu'est-ce que c'est ?
 
-Un assistant d'achat sportif intelligent qui recommande l'équipement parfait en fonction de :
+**Verronik** est un assistant d'achat sportif intelligent qui recommande l'équipement parfait en fonction de :
 - 🌤️ **La météo** (pluie, soleil, froid, vent)
 - 🏃 **L'activité** (running, vélo, randonnée)
 - 💰 **Ton budget**
@@ -245,7 +245,7 @@ npm run preview      # Prévisualiser le build
 
 ## 🏆 Crédits
 
-**Projet créé pour InnovHack - 17 janvier 2026**
+**Verronik** - Projet créé pour InnovHack - 17 janvier 2026
 
 - Interface générée avec **Lovable**
 - Backend IA intégré avec **Featherless**
